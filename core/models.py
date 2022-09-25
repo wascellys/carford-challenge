@@ -74,7 +74,6 @@ class Car(db.Model):
     name = db.Column(db.String(120), nullable=False)
     model = db.Column(db.Enum(ModelChoices), nullable=False)
     color = db.Column(db.Enum(ColorChoices), nullable=False)
-    available = db.Column(db.Boolean, default=False, nullable=False)
     owner_id = db.Column(db.Integer, db.ForeignKey('owner.id'),
                          nullable=False)
     created_on = db.Column(db.DateTime, default=datetime.datetime.now())
