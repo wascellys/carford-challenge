@@ -13,7 +13,7 @@
 
 ### Clonar repositório
 ```
-git clone https://github.com/wascellys/desafio-carford.git
+https://github.com/wascellys/carford-challenge.git
 ```
 
 ## Usando Docker
