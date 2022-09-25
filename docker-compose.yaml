@@ -1,0 +1,50 @@
+version: "3.6"
+
+services:
+
+  db:
+    image: postgres:14-alpine
+    env_file: .env
+    container_name: database-cars
+    hostname: ${DB_HOST}
+    volumes:
+      - data_db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_PORT=${DB_PORT}
+      - POSTGRES_DB=${DB_NAME}
+    ports:
+      - "5432:5432"
+    networks:
+      - carford
+
+  api:
+    build: .
+    container_name: api
+    env_file: .env
+    command: >
+        sh -c "flask --app app --debug run --host=0.0.0.0"
+    environment:
+      - POSTGRES_HOST=${DB_HOST}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_PORT=${DB_PORT}
+      - POSTGRES_DB=${DB_NAME}
+    volumes:
+      - .:/app/
+    links:
+      - db:db
+    ports:
+      - "5000:5000"
+    networks:
+      - carford
+    depends_on:
+      - db
+
+volumes:
+  data_db:
+
+networks:
+  carford:
+    driver: bridge
