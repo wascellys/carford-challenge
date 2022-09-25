@@ -20,7 +20,7 @@ https://github.com/wascellys/carford-challenge.git
 ## Usando Docker
 Na raiz do projeto, abra o terminal e execute o comando  
 ```
-docker-compose up --build -d
+docker-compose up --build
 ```
 
 ## Usando ambiente virtual
@@ -39,6 +39,17 @@ source myenv/bin/activate
 ## Instalação das Dependências
 ```
 pip install -r requirements.txt
+```
+## Criar banco de dados
+```
+psql -h localhost -U postgres
+```
+
+#### Criar banco de dados
+```
+CREATE DATABASE carford-db;
+
+GRANT ALL ON DATABASE carford-db TO postgres;
 ```
 
 ## Rodar Projeto
@@ -99,7 +110,7 @@ Os endpoints abertos não precisam de autenticação :
   | username  | Nome de usuario | String  | :ballot_box_with_check: |
   | email     | Email do usuário | String  | :ballot_box_with_check: |
   | password  | Senha do usuário | String  | :ballot_box_with_check: |
-- | name  | Nome do usuário | String  | :ballot_box_with_check: |
+  | name  | Nome do usuário | String  | :ballot_box_with_check: |
 
 - Rotas
   - *Cadastrar usuário: `POST` `/register`*
@@ -115,7 +126,7 @@ passar no cabeçalho da requisição: "Authorization": Bearer <token>
 
 - Campos:
   | Campo       | Descição                       | Tipo     | Obrigatório             |
-- | :----       | :------                        | :------  | :---------------------: |
+  | :----       | :------                        | :------  | :---------------------: |
   | name      | Nome do carro        | String  | :ballot_box_with_check: |
   | model | Modelo do carro         | String   | :ballot_box_with_check: |
   | color      | Cor do carro          | String   | :ballot_box_with_check: |
@@ -126,6 +137,13 @@ passar no cabeçalho da requisição: "Authorization": Bearer <token>
   - *Cadastrar um carro: `POST` `/v1/cars`*
   - *Atualizar um os dados de um carro: `PUT` `/v1/cars/{id}`*
   - *Deletar um carro cadastrado: `DELETE` `/v1/cars/{id}/`*
+  
+  OBS: Ao cadastrar um carro deve ser informado um modelo (model) e uma cor ( color), e devem ser escolhidas umas das seguintes opções,
+  obrigatóriamente:
+  - MODELO: "Hatch", "Sedan" ou "Convertible"
+  - COR: "Blue", "Gray" e "Yellow"
+
+  Qualquer outra opção, diferente dessas, gerará erro na requisiç
 
 
 #### Proprietario (Owner)
